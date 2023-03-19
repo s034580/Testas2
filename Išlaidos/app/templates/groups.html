@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Groups{% endblock %}
+
+{% block main %}
+    <div class="container d-flex col-12 justify-content-around flex-wrap">
+  {% for group in groups %}
+  
+  <div class="card mb-5" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title font-weight-bold">ID: {{ group.id }}</h5>
+      <p class="card-text">{{ group.name }}</p>
+      <a href="{{ url_for('group', group_id=group.id) }}" class="card-link">View bills</a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<form action="{{ url_for('groups')}}" method="POST" novalidate>
+  {{ form.hidden_tag() }}
+  <div class="col-4 p-4">
+    <div>
+      <div class="mb-3">Enter a group ID you would like to assign to yourself</div>
+      {{ form.group_id(class="form-control") }}
+      {% for error in form.group_id.errors %}
+      <div style="color: red">
+        {{ error }}
+      </div>
+      {% endfor %}
+    </div>
+
+  <button class="btn btn-primary mt-3" type="submit">Išsaugoti</button>
+
+</form>
+{% endblock %}

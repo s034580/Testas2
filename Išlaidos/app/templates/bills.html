@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ group['name'] }}{% endblock %}
+
+{% block main %}
+  <div class="mb-5">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Description</th>
+          <th scope="col">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+    {% for bill in bills %}
+    <tr>
+      <th scope="row">{{ loop.index }}</th>
+      <td>{{bill.name}}</td>
+      <td>{{bill.amount}}</td>
+    </tr>
+
+    {% endfor %}
+  </tbody>
+</table>
+  </div>
+<div class="col-4 p-4 mx-auto">
+  <form method="POST" action="{{ url_for('group', group_id=group.id) }}">
+    {{ form.hidden_tag() }}
+    <fieldset class="form-group">
+        <legend class="border-bottom mb-4">Add new bill</legend>
+<div class="mt-3 mb-1">Enter bill name</div>
+        <div class="form-group">
+          {{ form.name(class="form-control") }}
+          {% for error in form.name.errors %}
+          <div style="color: red">
+            {{ error }}
+          </div>
+          {% endfor %}
+        </div>
+        <div class="mt-3 mb-1">Enter bill amount</div>
+        <div class="form-group">
+          {{ form.amount(class="form-control") }}
+          {% for error in form.amount.errors %}
+          <div style="color: red">
+            {{ error }}
+          </div>
+          {% endfor %}
+        </div>
+        
+    </fieldset>
+    <button class="btn btn-primary mt-3" type="submit">Add</button>
+</form>
+</div>
+{% endblock %}
